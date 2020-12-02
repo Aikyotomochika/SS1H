@@ -13,28 +13,7 @@ $AS = 'XkQCXuEaicrY525oQ8kIWhEhTAH1Y8vU0EdGBQDRfNCQM'; // Access Token Secretを
 // TwitterOAuthクラスのインスタンスを作成
 $connect = new TwitterOAuth( $CK, $CS, $AT, $AS );
 
-//$statuses = $connect->get(
-//	'statuses/user_timeline',
-//    // 取得するツイートの条件を配列で指定
-//    array(
-//    	// ユーザー名（@は不要）
-//        'screen_name'       => 'XXXXXXXX',
-//        // ツイート件数
-//        'count'             => '5',
-//        // リプライを除外するかを、true（除外する）、false（除外しない）で指定
-//        'exclude_replies'   => 'true',
-//        // リツイートを含めるかを、true（含める）、false（含めない）で指定
-//        'include_rts'       => 'false'
-//    )
-//);
-//
-//// ツイート本文を格納する変数
-//$text_list = [];
-//
-//foreach( $statuses as $tweet ){
-//    $text = $tweet->text;
-//    array_push( $text_list, $text );
-//}
+
 $prams = array(
     'q' => 'こんにちは', // 検索したいキーワード
     'count' => '10', // 取得数

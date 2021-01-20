@@ -17,15 +17,16 @@ $connect = new TwitterOAuth( $CK, $CS, $AT, $AS );
 
 $prams = array(
     'q' => $key, // 検索したいキーワード
-    'count' => '10', // 取得数
+    'count' => '20', // 取得数
     'result_type' => 'mixed' // 取得するツイートの種類
   );
 
-  // Search tweets
+  // ツイートサーチ
   $statuses = $connect->get('search/tweets', $prams)->statuses;
 $tweet = array();
   foreach ($statuses as $status) {
     $text = htmlspecialchars($status->text, ENT_QUOTES, 'UTF-8');
+    //ツイートの内容を配列に入れる
     $tweet[] = $text;
 } 
 ?>

@@ -15,23 +15,25 @@ $message_text = $json_object->{"events"}[0]->{"message"}->{"text"};    //メッ�
 if($message_type != "text") exit;
  
 //返信メッセージ
+//人気のトレンドのとき
 if($message_text == "人気のトレンド"){
 require "twtrend.php";
 
 $return_message_text = "人気のトレンドは\n「" . $trend[0] . "」\n「". $trend[1] ."」\n「" . $trend[2] ."」\n「" . $trend[3] ."」\n「" . $trend[4] ."」\nです";
 
-	}
+    }
+    //おすすめのトレンドの時
 else if($message_text == "おすすめのトレンド"){
 require "twtrend.php";
+//トレンドをシャッフルして毎回違うトレンドを表示
 shuffle($trend);
 $return_message_text = "おすすめのトレンドは\n「" . $trend[0] . "」\n「". $trend[1] ."」\n「" . $trend[2] ."」\n「" . $trend[3] ."」\n「" . $trend[4] ."」\nです";
-
-			 }else if($message_text == "話題のニュース"){
-				$return_message_text = "こんな「" . $message_text . "」どうですか";
-					}else{
+//ツイートを表示
+}else{
 //session_start();
 $_SESSION['text'] = $message_text;
 require "twitter.php";
+shuffle($tweet);
 $messageData = [
 "type" => 'text',
 "text"=> $tweet[0]
@@ -56,11 +58,12 @@ $messageData5 = [
 "type" => 'text',
 "text" => $tweet[4]
 ];
+//ボット送信
 $response = [
     'replyToken' => $replyToken,
     'messages' => [$messageData,$messageData2,$messageData3,$messageData4,$messageData5]
 ];
-// error_log(json_encode($response));
+
 
 $ch = curl_init('https://api.line.me/v2/bot/message/reply');
 curl_setopt($ch, CURLOPT_POST, true);
@@ -76,6 +79,11 @@ error_log($result);
 curl_close($ch);
 
 unset($_SESSION[‘text’] );
+
+}
+//ツイートが見つからないとき
+if($messageData != null){
+$return_message_text = "お探しのツイートは見つかりませんでした";
 }
 //返信実行
 sending_messages($accessToken, $replyToken, $message_type, $return_message_text);

@@ -19,6 +19,7 @@ $arr = json_decode($json,true);
 $arr = $arr["0"]["trends"];
 $i = 0;
 $trend = array();
+//トレンドを配列に入れる
 foreach($arr as $data){
     
     $tw = $data["name"];
